@@ -361,11 +361,14 @@ public class RealmSearchViewController: UITableViewController, RealmSearchResult
 // MARK: UITableViewDelegate
 extension RealmSearchViewController {
     public override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
-        let object = self.fetchedResultsController.objectAtIndexPath(indexPath) as! Object
+        if let object = self.fetchedResultsController.objectAtIndexPath(indexPath) as? Object {
         
-        self.resultsDelegate.searchViewController(self, willSelectObject: object, atIndexPath: indexPath)
-        
-        return indexPath
+          self.resultsDelegate.searchViewController(self, willSelectObject: object, atIndexPath: indexPath)
+          
+          return indexPath
+        } else {
+          return nil
+        }
     }
     
     public override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
